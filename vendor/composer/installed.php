@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'evandrodev01/ecommerce',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'a5c330dc2bb9a7cff8a3b15aa406d5db19ec6c8b',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '8fba7aea3fe51a1152cf630be3bc8f80be287068',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'evandrodev01/ecommerce' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'a5c330dc2bb9a7cff8a3b15aa406d5db19ec6c8b',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '8fba7aea3fe51a1152cf630be3bc8f80be287068',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
