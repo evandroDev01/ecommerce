@@ -16,7 +16,11 @@ class Page{
 
     public function __construct($opts = array(), $tpl_dir = "/views/")
     {
+        if (session_status() == PHP_SESSION_NONE) { /// inicializando a session 
+            session_start();
+        }
 
+        $this->defaults["data"]["session"] = $_SESSION;
         $this->options = array_merge($this->defaults,$opts);
 
         /// configurando o templete ///
@@ -28,10 +32,13 @@ class Page{
         Tpl::configure($config);
 
         $this->tpl = new Tpl;
-
+        
         $this->setData($this->options["data"]);
 
-        $this->tpl->draw("header");
+        if($this->options['header'] === true)
+        {
+            $this->tpl->draw("header");   
+        }
     }
 
     private function setData($data = array())
@@ -53,7 +60,12 @@ class Page{
 
     public function __destruct()
     {
-        $this->tpl->draw("footer");
+
+        if($this->options['footer'] == true)
+        {
+            $this->tpl->draw("footer");
+        }
+        
     }
 
 }
