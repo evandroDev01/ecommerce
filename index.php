@@ -66,6 +66,80 @@ $app->get("/admin/logout",function($request,$response,$args)
 
 });
 
+$app->get("/admin/users",function($request,$response,$args)
+{
+    User::verifyLogin();
+
+    $users = User::listAll();
+
+    $page = new PageAdmin();
+    $page->setTpl("users",array(
+        "users" => $users
+    ));
+
+    return $response;
+
+});
+
+$app->get("/admin/users/create",function($request,$response,$args)
+{
+    User::verifyLogin();
+
+    $page = new PageAdmin();
+    $page->setTpl("users-create");
+
+
+    return $response;
+
+});
+
+$app->get("/admin/users/{iduser}/delete",function($request, $response,$args)
+{
+    User::verifyLogin();
+
+
+    return $response;
+});
+
+$app->get("/admin/users/{iduser}",function($request,$response,$args)
+{
+
+    User::verifyLogin();
+
+    $iduser = $args['iduser'];
+
+
+    $page = new PageAdmin();
+    $page->setTpl("users-update");
+
+    return $response;
+
+});
+
+$app->post("/admin/users/create",function($request,$response,$args)
+{
+    User::verifyLogin();
+
+    $user = new User();
+
+    $_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
+
+    $user->setData($_POST);
+    $user->save();
+
+    header("Location: /admin/users");
+    
+    return $response->withHeader('Location', '/admin/users')->withStatus(302);
+
+});
+
+$app->post("/admin/users/:iduser",function($iduser)
+{
+    User::verifyLogin();
+
+});
+
+
 
 // Executando a aplicação
 $app->run();
