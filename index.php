@@ -97,8 +97,15 @@ $app->get("/admin/users/{iduser}/delete",function($request, $response,$args)
 {
     User::verifyLogin();
 
+    $iduser = $args['iduser'];
 
-    return $response;
+    $user = new User();
+    $user->get((int)$iduser);
+    $user->delete();
+
+    header("Location: /admin/users");
+
+    return $response->withHeader('Location', '/admin/users')->withStatus(302);
 });
 
 $app->get("/admin/users/{iduser}",function($request,$response,$args)
@@ -108,9 +115,11 @@ $app->get("/admin/users/{iduser}",function($request,$response,$args)
 
     $iduser = $args['iduser'];
 
+    $user = new User();
+    $user->get((int)$iduser);
 
     $page = new PageAdmin();
-    $page->setTpl("users-update");
+    $page->setTpl("users-update",array("user" => $user->getValues()));
 
     return $response;
 
@@ -133,9 +142,22 @@ $app->post("/admin/users/create",function($request,$response,$args)
 
 });
 
-$app->post("/admin/users/:iduser",function($iduser)
+$app->post("/admin/users/{iduser}",function($request,$response,$args)
 {
     User::verifyLogin();
+
+    $iduser = $args['iduser'];
+
+    $_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
+
+    $user = new User();
+    $user->get((int)$iduser);
+    $user->setData($_POST);
+    $user->update();
+
+    header("Location: /admin/users");
+
+    return $response->withHeader('Location', '/admin/users')->withStatus(302);
 
 });
 
